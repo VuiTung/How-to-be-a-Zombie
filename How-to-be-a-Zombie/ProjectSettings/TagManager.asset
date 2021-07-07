@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackgroundLayer
+    uniqueID: 2748870741
+    locked: 0
+  - name: plattetLayer
+    uniqueID: 4211167441
+    locked: 0
