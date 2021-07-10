@@ -47,3 +47,6 @@ TagManager:
   - name: plattetLayer
     uniqueID: 4211167441
     locked: 0
+  - name: CharacterLayer
+    uniqueID: 2561291853
+    locked: 0
