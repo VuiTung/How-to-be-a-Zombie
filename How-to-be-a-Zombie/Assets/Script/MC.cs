@@ -16,7 +16,6 @@ public class MC : MonoBehaviour
     private int facingDirection = 1;
     private bool isOnSlope;
     private Vector2 newVelocity;
-    private Vector2 newForce;
     private float slopeDownAngle;
     private float slopeSideAngle;
     private float lastSlopeAngle;
@@ -26,7 +25,7 @@ public class MC : MonoBehaviour
     private Transform groundCheck;
     [SerializeField]
     private float maxSlopeAngle;
-    private float groundCheckRadius= .07f;
+    private float groundCheckRadius = .2f;
     [SerializeField]
     private PhysicsMaterial2D noFriction;
     [SerializeField]
@@ -40,7 +39,7 @@ public class MC : MonoBehaviour
     }
     private void slopeCheck()
     {
-        Vector2 checkPos = transform.position - new Vector3(0.0f, colliderSize.y *1.6f);
+        Vector2 checkPos = transform.position - new Vector3(0.0f, colliderSize.y * 1.5f);
 
         slopeCheckHorizontal(checkPos);
         slopeCheckVertical(checkPos);
@@ -53,14 +52,14 @@ public class MC : MonoBehaviour
         if (slopeHitFront)
         {
             isOnSlope = true;
-            
+
             slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
 
         }
         else if (slopeHitBack)
         {
             isOnSlope = true;
-            
+
             slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
         }
         else
@@ -68,7 +67,6 @@ public class MC : MonoBehaviour
             slopeSideAngle = 0.0f;
             isOnSlope = false;
         }
-        
     }
     private void CheckGround()
     {
@@ -87,7 +85,7 @@ public class MC : MonoBehaviour
             }
         }
 
- 
+
     }
     private void slopeCheckVertical(Vector2 checkPos)
     {
@@ -112,7 +110,7 @@ public class MC : MonoBehaviour
 
         }
 
-        if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
+        if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle && slopeSideAngle < 89)
         {
             canWalkOnSlope = false;
         }
@@ -136,7 +134,7 @@ public class MC : MonoBehaviour
     {
         CheckInput();
         CheckGround();
-      slopeCheck();
+        slopeCheck();
         ApplyMovement();
 
     }
@@ -158,24 +156,28 @@ public class MC : MonoBehaviour
     {
         if (!isOnSlope && isGrounded) //if not on slope
         {
-            
+
             newVelocity.Set(movementSpeed * xInput, 0.0f);
             _rigidbody.velocity = newVelocity;
         }
         else if (isGrounded && isOnSlope && canWalkOnSlope) //If on slope
         {
-            
+
             newVelocity.Set(movementSpeed * slopeNormalPerp.x * -xInput, movementSpeed * slopeNormalPerp.y * -xInput);
             _rigidbody.velocity = newVelocity;
         }
-        //else if (!isGrounded) //If in air
+        //else if(isGrounded && isOnSlope && !canWalkOnSlope)//when on top of the slope 
         //{
-            
-        //    newVelocity.Set(movementSpeed * xInput, _rigidbody.velocity.y);
+        //    newVelocity.Set(movementSpeed * xInput, 0.0f);
         //    _rigidbody.velocity = newVelocity;
         //}
-        
-
+        Debug.Log("isonground"+ isGrounded);
+        Debug.Log("isonslope "+ isOnSlope);
+        Debug.Log("canwalkon slope" + canWalkOnSlope);
+        Debug.Log("slopeNormalPerp" + slopeNormalPerp);
+        Debug.Log("slopeDownAngle"+ slopeDownAngle);
+        Debug.Log("lastSlopeAngle" + lastSlopeAngle);
+        Debug.Log("slopeSideAngle" + slopeSideAngle);
     }
 
     private void Flip()
