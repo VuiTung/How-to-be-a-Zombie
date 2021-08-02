@@ -171,13 +171,13 @@ public class MC : MonoBehaviour
         //    newVelocity.Set(movementSpeed * xInput, 0.0f);
         //    _rigidbody.velocity = newVelocity;
         //}
-        Debug.Log("isonground"+ isGrounded);
-        Debug.Log("isonslope "+ isOnSlope);
-        Debug.Log("canwalkon slope" + canWalkOnSlope);
-        Debug.Log("slopeNormalPerp" + slopeNormalPerp);
-        Debug.Log("slopeDownAngle"+ slopeDownAngle);
-        Debug.Log("lastSlopeAngle" + lastSlopeAngle);
-        Debug.Log("slopeSideAngle" + slopeSideAngle);
+        //Debug.Log("isonground"+ isGrounded);
+        //Debug.Log("isonslope "+ isOnSlope);
+        //Debug.Log("canwalkon slope" + canWalkOnSlope);
+        //Debug.Log("slopeNormalPerp" + slopeNormalPerp);
+        //Debug.Log("slopeDownAngle"+ slopeDownAngle);
+        //Debug.Log("lastSlopeAngle" + lastSlopeAngle);
+        //Debug.Log("slopeSideAngle" + slopeSideAngle);
     }
 
     private void Flip()
