@@ -10,7 +10,7 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyLayers;
     public float AttackRange = 0.5f;
     public float damage = 5f;
-    public float AttackRate = 20f;
+    public float AttackRate = 1f;
     float nextAttackTime = 0f;
 
     // Start is called before the first frame update
