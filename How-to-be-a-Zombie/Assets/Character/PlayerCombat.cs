@@ -47,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
             foreach(Collider2D enemy in hitenemies) { // for each enemy in the array hitenemies
             bool duplicate = false; //declare duplication checker
                 for (int i = 0; i<size; i++) {
-                    if (check[i].Equals(enemy.name)) { //check if their name is same
+                    if (check[i].Equals(enemy.name)) { //check if enemy already existed in the list
                         duplicate = true;
                         break;
                     } else { //damage the enemy if the loop has completed
@@ -57,7 +57,7 @@ public class PlayerCombat : MonoBehaviour
                 if (duplicate == false) {
                     enemy.GetComponent<Enemy>().takeDamage(damage); // call damage function in enemy script
                         check[counter] = enemy.name; //dump enemy into array
-                        counter++;
+                        counter++; //increase the counter
                 }      
         }
         
