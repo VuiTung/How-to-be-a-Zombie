@@ -29,6 +29,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    //assiufhaifhsiufh testing
     void NormalHit() {
         Debug.Log("Hit once");
         // play an attack animation
