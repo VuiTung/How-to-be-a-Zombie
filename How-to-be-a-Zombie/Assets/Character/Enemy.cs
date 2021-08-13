@@ -18,8 +18,9 @@ public class Enemy : MonoBehaviour
             //Destroy(this);
             Debug.Log(this.name + " is dead");
             GetComponent < follow2 > ().enabled = true;
-            // vv help change their layer here willis vv
-            //gameObject.layer = 2;
+            GetComponent<Shooting>().enabled = false;
+            gameObject.layer = LayerMask.NameToLayer("FU");
+            transform.Rotate(0.0f, 180.0f, 0.0f);
             this.enabled = false;
         }
         }
