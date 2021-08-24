@@ -212,7 +212,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49049825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1182011555}
@@ -222,8 +222,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 55.91, y: 4.998}
+  m_SizeDelta: {x: 58.18286, y: 9.996033}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &49049827
 MonoBehaviour:
@@ -7961,9 +7961,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 49049827}
-  Low: {r: 1, g: 0, b: 0.045223236, a: 0}
-  High: {r: 0.10578859, g: 1, b: 0, a: 0}
-  Offset: {x: 0, y: 0, z: 0}
+  Low: {r: 1, g: 0, b: 0.045223236, a: 1}
+  High: {r: 0.10578859, g: 1, b: 0, a: 1}
+  Offset: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &1618418629
 PrefabInstance:
   m_ObjectHideFlags: 0

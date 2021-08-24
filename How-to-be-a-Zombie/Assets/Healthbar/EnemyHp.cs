@@ -15,6 +15,9 @@ public class EnemyHp : MonoBehaviour
         slider.value = health;
         slider.maxValue = maxHealth;
         slider.fillRect.GetComponentInChildren<Image>().color = Color.Lerp(Low, High, slider.normalizedValue);
+        if (health <= 0) {
+            slider.gameObject.SetActive(false);
+        }
     }
 
     void Update()
