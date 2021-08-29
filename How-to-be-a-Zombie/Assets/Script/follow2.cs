@@ -28,19 +28,24 @@ public class follow2 : MonoBehaviour
     [SerializeField]
     private Transform groundCheck;
     [SerializeField]
-    private Transform yposi;
-    [SerializeField]
-    private Transform ypositarget;
-    [SerializeField]
     private PhysicsMaterial2D noFriction;
     [SerializeField]
     private PhysicsMaterial2D fullFriction;
+    [SerializeField]
+    private PhysicsMaterial2D ZeroFriction;
     private Vector2 newVelocity;
     private float xInput;
     private int facingDirection = 1;
     private int position =1;
     private float randomnum;
     private float randomnum2;
+    Vector3 startPosition;
+    Vector3 desti = Vector3.zero;
+    float t;
+    float timeToReachTarget;
+    public float delay;
+    private float timer;
+    bool stop;
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -220,37 +225,93 @@ public class follow2 : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        timer += Time.deltaTime;
         xInput = Input.GetAxisRaw("Horizontal");
         CheckGround();
         slopeCheck();
         checkgangposition();
-        if (!isOnSlope && isGrounded) //if not on slope
+
+        if (desti != Vector3.zero)
+        {
+            t += Time.deltaTime / timeToReachTarget;
+            transform.position = Vector3.Lerp(startPosition, desti, t);
+            if (desti == transform.position)
+            {
+
+                desti = Vector3.zero;
+                Destroy(gameObject);
+            }
+        }
+        else if (!isOnSlope && isGrounded) //if not on slope
         {
 
             Vector3 myVector = new Vector3(target.position.x, transform.position.y, transform.position.z) - changeposition();
             CheckDirection(myVector);
-            transform.position = Vector3.MoveTowards(transform.position, myVector, movementSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, myVector, movementSpeed * Time.deltaTime);
+            if (myVector != transform.position && stop)
+            {
+                _rigidbody.sharedMaterial = ZeroFriction;
+                delay += timer;
+                stop = false;
+            }
+            if (timer >= delay)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, myVector, movementSpeed * Time.deltaTime);
+            }
+            if (transform.position == myVector && !stop)
+            {
+
+                delay = 0.1f;
+                stop = true;
+            }
+            else if (myVector.x - transform.position.x >= 0 && myVector.x - transform.position.x <= 0.07 && !stop && xInput == 0 && position == 1)
+            {
+                _rigidbody.sharedMaterial = fullFriction;
+
+                delay = 0.1f;
+                stop = true;
+
+
+            }
+            else if (transform.position.x - myVector.x >= 0 && !stop && xInput == 0 && position == 3)
+            {
+                _rigidbody.sharedMaterial = fullFriction;
+                delay = 0.1f;
+                stop = true;
+            }
+            else if (transform.position.x - myVector.x >= 0 && transform.position.x - myVector.x <= 0.07 && randomnum2 >= 0 && !stop && xInput == 0 && position == 2)
+            {
+                _rigidbody.sharedMaterial = fullFriction;
+                delay = 0.1f;
+                stop = true;
+            }
+            else if (myVector.x - transform.position.x >= 0 && myVector.x - transform.position.x <= 0.07 && randomnum2 <= 0 && !stop && xInput == 0 && position == 2)
+            {
+                _rigidbody.sharedMaterial = fullFriction;
+                delay = 0.1f;
+                stop = true;
+            }
 
         }
         else if (isGrounded && isOnSlope && canWalkOnSlope) //If on slope
-
         {
+
            
             newVelocity.Set(5f * slopeNormalPerp.x * -xInput, 5f * slopeNormalPerp.y * -xInput);
             CheckInput();
             _rigidbody.velocity = newVelocity;
-            //Vector3 myVector = new Vector3(target.position.x * slopeNormalPerp.x, target.position.y * slopeNormalPerp.y, transform.position.z) - new Vector3(1, 0, 0);
-            //transform.position = Vector3.MoveTowards(transform.position, myVector, movementSpeed * Time.deltaTime);
 
 
         }
 
-        //else if (isGrounded && isOnSlope && !canWalkOnSlope)//when on top of the slope 
-        //{
-        //    newVelocity.Set(movementSpeed * xInput, 0.0f);
-        //    _rigidbody.velocity = newVelocity;
-        //}
-        
-        
+
+
+    }
+    public void SetDestination(Vector3 destination, float time)
+    {
+        t = 0;
+        startPosition = transform.position;
+        timeToReachTarget = time;
+        desti = destination;
     }
 }
