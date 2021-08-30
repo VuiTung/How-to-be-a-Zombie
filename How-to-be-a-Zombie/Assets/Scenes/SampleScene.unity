@@ -2940,7 +2940,6 @@ MonoBehaviour:
   AttackRange: 0.5
   damage: 5
   AttackRate: 1
-  ally: {fileID: 1316954308}
 --- !u!212 &799329808
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13003,8 +13002,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_AnchoredPosition: {x: -0.019269943, y: 0}
+  m_SizeDelta: {x: 0.038513184, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1865549091
 MonoBehaviour:
@@ -13150,8 +13149,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.577, y: 0}
+  m_SizeDelta: {x: -2.2055206, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1889087287
 GameObject:

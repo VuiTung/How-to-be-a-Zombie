@@ -12,7 +12,6 @@ public class PlayerCombat : MonoBehaviour
     public float damage = 5f;
     public float AttackRate = 1f;
     float nextAttackTime = 0f;
-    public Ally ally; // for testing hp bar, can be deleted
 
     // Start is called before the first frame update
     void Start()
@@ -27,10 +26,6 @@ public class PlayerCombat : MonoBehaviour
             NormalHit();
             nextAttackTime =  Time.time + 1f / AttackRate;
         }
-        }
-
-        if (Input.GetKeyDown("space")) { // for testing hp bar, can be deleted
-            ally.takeDamage(damage);
         }
     }
 
