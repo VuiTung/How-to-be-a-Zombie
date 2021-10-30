@@ -137,20 +137,21 @@ public class follow2 : MonoBehaviour
             canWalkOnSlope = true;
         }
         //here need put is moving
-        if (isOnSlope && canWalkOnSlope && xInput == 0.0f)
-        {
-            _rigidbody.sharedMaterial = fullFriction;
-        }
-        else
-        {   
-            _rigidbody.sharedMaterial = noFriction;
+        //if (isOnSlope && canWalkOnSlope && stop)
+        //{
+        //    Debug.Log("called");
+        //    _rigidbody.sharedMaterial = fullFriction;
+        //}
+        //else
+        //{   
+        //    _rigidbody.sharedMaterial = noFriction;
 
-        }
+        //}
     }
     private void CheckDirection(Vector3 vec)
     {
 
-        if (vec.x - transform.position.x <-0.1 && facingDirection == 1)
+        if (vec.x - transform.position.x <-0.07 && facingDirection == 1)
         {
             Flip();
         }
@@ -204,17 +205,14 @@ public class follow2 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Q pressed");
             position += 1;
             if (position > 3)
             {
                 position = 3;
             }
-            Debug.Log("position " + position);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("E pressed");
             position -= 1;
             if (position < 1)
             {
@@ -296,13 +294,145 @@ public class follow2 : MonoBehaviour
         else if (isGrounded && isOnSlope && canWalkOnSlope) //If on slope
         {
 
-           
-            newVelocity.Set(5f * slopeNormalPerp.x * -xInput, 5f * slopeNormalPerp.y * -xInput);
-            CheckInput();
-            _rigidbody.velocity = newVelocity;
+            if (xInput != 0)
+            {
+                newVelocity.Set(5f * slopeNormalPerp.x * -xInput, 5f * slopeNormalPerp.y * -xInput);
+                CheckInput();
+                _rigidbody.velocity = newVelocity;
+            }
+            else
+            {
+                int i = position;
+                //when position1
+                if (i == 1 && xInput == 0)
+                {
+                    //when it is between position 1 and position 1+0.07 it will stop
+                    if (target.position.x - transform.position.x >= randomnum && target.position.x - transform.position.x <= randomnum+0.07)
+                    {
 
+                        _rigidbody.sharedMaterial = fullFriction;
+                        newVelocity.Set(5f * slopeNormalPerp.x * 0, 5f * slopeNormalPerp.y * 0);
+                        CheckInput();
+                        _rigidbody.velocity = newVelocity;
+                        
+                        
+                    }
+                    else
+                    {   // when it is larger than position 1 mean interval bigger means need to move forward
+                        if (target.position.x - transform.position.x>= randomnum)
+                        {
+                        _rigidbody.sharedMaterial = ZeroFriction;
+                        newVelocity.Set(5f * slopeNormalPerp.x * -1, 5f * slopeNormalPerp.y * -1);
+                        CheckInput();
+                        _rigidbody.velocity = newVelocity;
+                        }
+                        // when it is smaller than position 1+0.07 mean interval big but transform is infront of target means need to move backward
+                        else if (target.position.x - transform.position.x <= randomnum + 0.07)
+                        {
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * 1, 5f * slopeNormalPerp.y * 1);
+                            CheckInput();
+                            _rigidbody.velocity = newVelocity;
+                        }
+                       
+                        
+                    }
+                }
+                // when it is position 2, p.s when randomnum2 is positive means the sidekick shud be behind the target vise versal
+                else if (i == 2 && xInput == 0)
+                {
+                    //when it is infront and between randomnum2 and randomnum2 -0.07
+                    if (transform.position.x - target.position.x >= -randomnum2 - 0.07 && transform.position.x - target.position.x <= -randomnum2  && randomnum2 <= 0)
+                    {
+                        _rigidbody.sharedMaterial = fullFriction;
+                        newVelocity.Set(5f * slopeNormalPerp.x * 0, 5f * slopeNormalPerp.y * 0);
+                        CheckInput();
+                        _rigidbody.velocity = newVelocity;
+                    }
+                    //when it is behind and between randomnum2 and randomnum2 +0.07
+                    else if (target.position.x - transform.position.x >= randomnum2 && target.position.x - transform.position.x <= randomnum2 + 0.07 && randomnum2 >= 0)
+                    {
+                        _rigidbody.sharedMaterial = fullFriction;
+                        newVelocity.Set(5f * slopeNormalPerp.x * 0, 5f * slopeNormalPerp.y * 0);
+                        CheckInput();
+                        _rigidbody.velocity = newVelocity;
+                    }
+                    else
+                    {   //when it is behind and bigger than randomnum2 means interval big need to move forward
+                        if (target.position.x - transform.position.x >= randomnum2 && randomnum2 >= 0)
+                        {
 
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * -1, 5f * slopeNormalPerp.y * -1);
+                            CheckInput();
+                            _rigidbody.velocity = newVelocity;
+
+                        }
+                        //when it is behind and smaller than randomnum2+0.07 means interval big need to move backward
+                        else if (target.position.x - transform.position.x <= randomnum2+0.07 && randomnum2 >= 0)
+                        {
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * 1, 5f * slopeNormalPerp.y * 1);
+                            CheckInput();
+                            _rigidbody.velocity = newVelocity;
+                        }
+                        //when it is infront and bigger than randonnum2 means interval big need to move backward
+                        else if (transform.position.x - target.position.x >= -randomnum2 && randomnum2 <= 0)
+                        {
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * 1, 5f * slopeNormalPerp.y * 1);
+                            CheckInput();
+                            _rigidbody.velocity = newVelocity;
+                        }//when it is infront and bigger than randonnum2+0.07 means interval big need to move forward
+                        else if (transform.position.x - target.position.x <= -randomnum2-0.07 && randomnum2 <= 0)
+                        {
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * -1, 5f * slopeNormalPerp.y * -1);
+                            CheckInput();
+                            _rigidbody.velocity = newVelocity;
+                        }
+                    }
+                }
+                //when position3
+                else if (i == 3 && xInput == 0)
+                {   
+                    //When the sidekick infront the MC more than randomnum and lower than randonum +0.07
+                    if (transform.position.x - target.position.x >= randomnum && transform.position.x - target.position.x <= randomnum+0.07)
+                    {
+                        _rigidbody.sharedMaterial = fullFriction;
+                        newVelocity.Set(5f * slopeNormalPerp.x * 0, 5f * slopeNormalPerp.y * 0);
+                        CheckInput();
+                        _rigidbody.velocity = newVelocity;
+                        
+                    }
+                    else
+                    {   
+                        //When the sidekick not enough the position in randomnum it will move forward
+                        if (transform.position.x - target.position.x < randomnum)
+                        {
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * -1, 5f * slopeNormalPerp.y * -1);
+                        CheckInput();
+                        _rigidbody.velocity = newVelocity;
+                        
+                        }
+                        //When the sidekick move more than the position in randomnum + 0.07 it will move backward
+                        else if (transform.position.x - target.position.x > randomnum + 0.07)
+                        {
+                            _rigidbody.sharedMaterial = ZeroFriction;
+                            newVelocity.Set(5f * slopeNormalPerp.x * 1, 5f * slopeNormalPerp.y * 1);
+                            CheckInput();
+                            _rigidbody.velocity = newVelocity;
+                       
+                        }
+                    
+                    }
+                }
+            }
+
+            //Debug.Log("xinput"+ xInput);
         }
+        else { Debug.Log("in air"); }
 
 
 
